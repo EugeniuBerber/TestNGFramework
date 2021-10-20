@@ -1,7 +1,6 @@
 package utils;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import jdk.nashorn.internal.scripts.JS;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,15 +9,16 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
 
 import java.util.concurrent.TimeUnit;
 
-public class CommonMethods {
+public class CommonMethods_BeforeClass {
     public static WebDriver driver;
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void openBrowser() {
         ConfigReader.readProperties(Constants.CONFIGURATION_FILEPATH);
         switch (ConfigReader.getPropertyValue("browser")) {
@@ -36,14 +36,14 @@ public class CommonMethods {
                 break;
 
             default:
-               throw  new RuntimeException("Invalid browser name");
+                throw  new RuntimeException("Invalid browser name");
         }
         driver.get(ConfigReader.getPropertyValue("url"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Constants.IMPLICIT_WAIT, TimeUnit.SECONDS);
     }
 
-    public static void sendText(WebElement element ,String textToSend){
+    public static void sendText(WebElement element , String textToSend){
         element.clear();
         element.sendKeys(textToSend);
     }
@@ -69,7 +69,7 @@ public class CommonMethods {
         getJSExecutor().executeScript("arguments[0].click();", element);
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
         if (driver != null)
             driver.quit();
