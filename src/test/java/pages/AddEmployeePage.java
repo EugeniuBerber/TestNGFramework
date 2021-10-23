@@ -31,6 +31,9 @@ public class AddEmployeePage extends CommonMethods {
     @FindBy(id = "re_password")
     public WebElement rePasswordField;
 
+    @FindBy(id = "photofile")
+    public WebElement photograph;
+
     @FindBy(id = "btnSave")
     public WebElement saveBtn;
 
